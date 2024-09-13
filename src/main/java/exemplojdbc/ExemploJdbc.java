@@ -34,6 +34,11 @@ public class ExemploJdbc {
         }
     }
 
+    /**
+     * Lista dinamicamente os dados de todas as linhas e colunas de uma determinada tabela no banco.
+     * @param conn conexão com o banco
+     * @param tabela nome da tabela pra listar os dados
+     */
     private void listarDadosTabela(final Connection conn, final String tabela) {
         final var sql = "select * from " + tabela;
         //System.out.println(sql);
