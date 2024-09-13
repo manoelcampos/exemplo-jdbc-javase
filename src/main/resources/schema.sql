@@ -185,68 +185,37 @@ VALUES (1, 'Afonso Cláudio', 8),
 
 -- ###################################################
 
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Wendy Parker', '96557866635', 1, '1994-04-16');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Stephanie Frami', '19485406486', 2, '1968-10-01');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Stewart Lesch', '88344327169', 2, '1946-05-09');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Mr. Victor Langosh', '16057371750', 3, '2005-11-20');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Dr. Elijah Welch', '42006254770', 3, '1967-05-27');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Suzanne Kreiger', '23828465229', 1, '1993-11-04');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento)
-VALUES ('Phillip Larkin', '92109749005', 4, '1955-10-19');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Wendy Parker', '96557866635', 1, '1994-04-16');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Stephanie Frami', '19485406486', 2, '1968-10-01');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Stewart Lesch', '88344327169', 2, '1946-05-09');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Mr. Victor Langosh', '16057371750', 3, '2005-11-20');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Dr. Elijah Welch', '42006254770', 3, '1967-05-27');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Suzanne Kreiger', '23828465229', 1, '1993-11-04');
+INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Phillip Larkin', '92109749005', 4, '1955-10-19');
 
-INSERT INTO loja (cidade_id, data_inauguracao)
-VALUES (1, '1943-05-11');
-INSERT INTO loja (cidade_id, data_inauguracao)
-VALUES (1, '1956-12-03');
-INSERT INTO loja (cidade_id, data_inauguracao)
-VALUES (2, '1981-05-24');
-INSERT INTO loja (cidade_id, data_inauguracao)
-VALUES (3, '1984-04-23');
+INSERT INTO loja (cidade_id, data_inauguracao) VALUES (1, '1943-05-11');
+INSERT INTO loja (cidade_id, data_inauguracao) VALUES (1, '1956-12-03');
+INSERT INTO loja (cidade_id, data_inauguracao) VALUES (2, '1981-05-24');
+INSERT INTO loja (cidade_id, data_inauguracao) VALUES (3, '1984-04-23');
 
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento)
-VALUES ('Jessie Jacobs', '49075676852', 1, '1959-02-02');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento)
-VALUES ('Santiago Mante', '32914553214', 1, '1982-10-27');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento)
-VALUES ('Esther Sauer', '16900316437', 2, '2001-10-11');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento)
-VALUES ('Dawn Huel', '42142795296', 2, '1989-02-17');
+INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Jessie Jacobs', '49075676852', 1, '1959-02-02');
+INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Santiago Mante', '32914553214', 1, '1982-10-27');
+INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Esther Sauer', '16900316437', 2, '2001-10-11');
+INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Dawn Huel', '42142795296', 2, '1989-02-17');
 
-INSERT INTO marca (nome)
-VALUES ('Little, Boyle and Abshire');
-INSERT INTO marca (nome)
-VALUES ('Rempel - Herman');
-INSERT INTO marca (nome)
-VALUES ('Senger - Grimes');
-INSERT INTO marca (nome)
-VALUES ('Pouros - Gutmann');
-INSERT INTO marca (nome)
-VALUES ('Ebert Inc');
+INSERT INTO marca (nome) VALUES ('Little, Boyle and Abshire');
+INSERT INTO marca (nome) VALUES ('Rempel - Herman');
+INSERT INTO marca (nome) VALUES ('Senger - Grimes');
+INSERT INTO marca (nome) VALUES ('Pouros - Gutmann');
+INSERT INTO marca (nome) VALUES ('Ebert Inc');
 
-
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Recycled Rubber Shirt', 5, 102);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Recycled Frozen Shirt', 1, 798);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Modern Bronze Cheese', 3, 945);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Modern Soft Sausages', 3, 786);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Fantastic Granite Bacon', 4, 23);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Handcrafted Rubber Chips', 1, 910);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Awesome Metal Gloves', 5, 907);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Sleek Granite Shirt', 2, 319);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Electronic Fresh Soap', 5, 971);
-INSERT INTO produto (nome, marca_id, valor)
-VALUES ('Modern Concrete Cheese', 5, 308);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Recycled Rubber Shirt', 5, 102);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Recycled Frozen Shirt', 1, 798);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Bronze Cheese', 3, 945);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Soft Sausages', 3, 786);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Fantastic Granite Bacon', 4, 23);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Handcrafted Rubber Chips', 1, 910);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Awesome Metal Gloves', 5, 907);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Sleek Granite Shirt', 2, 319);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Electronic Fresh Soap', 5, 971);
+INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Concrete Cheese', 5, 308);
