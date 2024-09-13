@@ -50,7 +50,7 @@ public final class SQLUtils {
         return line == null ? null : line.trim();
     }
 
-    private static boolean isComment(String line) {
+    private static boolean isComment(final String line) {
         return line.startsWith("--") || line.startsWith("//") || line.startsWith("#");
     }
 
