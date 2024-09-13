@@ -16,8 +16,8 @@ public final class SQLUtils {
      */
     private SQLUtils() {/**/}
 
-    public static void runSqlFile(final Connection conn, final String fileName) {
-        try (final BufferedReader reader = getFileResource(fileName)) {
+    public static void runFile(final Connection conn, final String sqlFileName) {
+        try (final BufferedReader reader = getFileResource(sqlFileName)) {
             String line;
             var builder = new StringBuilder();
             while((line = getLine(reader)) != null) {

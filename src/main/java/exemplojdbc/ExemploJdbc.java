@@ -17,8 +17,8 @@ public class ExemploJdbc {
     }
 
     public ExemploJdbc() {
-        try(var conn = getConnection()){
-            SQLUtils.runSqlFile(conn, "schema.sql");
+        try(final var conn = getConnection()){
+            SQLUtils.runFile(conn, "schema.sql");
             listarEstados(conn);
             localizarEstado(conn, "PR");
             listarDadosTabela(conn, "produto");
@@ -27,15 +27,15 @@ public class ExemploJdbc {
         }
     }
 
-    private void listarDadosTabela(Connection conn, String tabela) {
-        var sql = "select * from " + tabela;
+    private void listarDadosTabela(final Connection conn, final String tabela) {
+        final var sql = "select * from " + tabela;
         //System.out.println(sql);
         try {
-            var statement = conn.createStatement();
-            var result = statement.executeQuery(sql);
+            final var statement = conn.createStatement();
+            final var result = statement.executeQuery(sql);
 
-            var metadata = result.getMetaData();
-            int cols = metadata.getColumnCount();
+            final var metadata = result.getMetaData();
+            final int cols = metadata.getColumnCount();
 
             for (int i = 1; i <= cols; i++) {
                 System.out.printf("%-30s | ", metadata.getColumnName(i));
@@ -51,17 +51,16 @@ public class ExemploJdbc {
         } catch (SQLException e) {
             System.err.println("Erro na execução da consulta: " + e.getMessage());
         }
-
     }
 
-    private void localizarEstado(Connection conn, String uf) {
+    private void localizarEstado(final Connection conn, final String uf) {
         try{
             //var sql = "select * from estado where uf = '" + uf + "'"; //suscetível a SQL Injection
-            var sql = "select * from estado where uf = ?";
-            var statement = conn.prepareStatement(sql);
+            final var sql = "select * from estado where uf = ?";
+            final var statement = conn.prepareStatement(sql);
             //System.out.println(sql);
             statement.setString(1, uf);
-            var result = statement.executeQuery();
+            final var result = statement.executeQuery();
             if(result.next()){
                 System.out.printf("Id: %2d Nome: %-30s UF: %s\n", result.getInt("id"), result.getString("nome"), result.getString("uf"));
             }
@@ -72,14 +71,16 @@ public class ExemploJdbc {
 
     }
 
-    private void listarEstados(Connection conn) {
+    private void listarEstados(final Connection conn) {
         try{
             System.out.println("Conexão com o banco realizada com sucesso.");
 
-            var statement = conn.createStatement();
-            var result = statement.executeQuery("select * from estado");
+            final var statement = conn.createStatement();
+            final var result = statement.executeQuery("select * from estado");
             while(result.next()){
-                System.out.printf("Id: %2d Nome: %-30s UF: %s\n", result.getInt("id"), result.getString("nome"), result.getString("uf"));
+                System.out.printf(
+                        "Id: %2d Nome: %-30s UF: %s\n",
+                        result.getInt("id"), result.getString("nome"), result.getString("uf"));
             }
             System.out.println();
         } catch (SQLException e) {
@@ -93,8 +94,9 @@ public class ExemploJdbc {
 
     /**
      * Carrega o driver JDBC para o banco de dados a ser utilizado.
-     * Não é mais necessário nas versões atuais do JDBC.
+     * @deprecated Não é mais necessário nas versões atuais do JDBC.
      */
+    @Deprecated
     private void carregarDriverJDBC() {
         try {
             Class.forName("org.postgresql.Driver");
