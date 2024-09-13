@@ -8,6 +8,11 @@ import java.sql.SQLException;
  * @author Manoel Campos
  */
 public class ExemploJdbc {
+    /**
+     * String de conexão com o banco de dados.
+     * O banco de dados utilizado é o Apache H2, que está configurado
+     * na string de conexão para ser um banco em memória.
+     */
     private final String CONNECTION_URL = "jdbc:h2:mem:meubanco";
     private final String USERNAME = "sa";
     private final String PASSWORD = "password";
@@ -19,8 +24,8 @@ public class ExemploJdbc {
     public ExemploJdbc() {
         try(final var conn = getConnection()){
             System.out.printf("Conexão com o banco realizada com sucesso: %s%n%n", CONNECTION_URL);
+            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
 
-            SQLUtils.runFile(conn, "schema.sql");
             listarEstados(conn);
             localizarEstado(conn, "PR");
             listarDadosTabela(conn, "produto");

@@ -1,3 +1,5 @@
+-- Script SQL para Apache H2 que cria as tabelas e popula o banco.
+
 create table transacao
 (
     id      serial         not null primary key,
