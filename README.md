@@ -17,7 +17,7 @@ O Driver JDBC para o Apache H2 é adicionado como uma dependência no [pom.xml](
 
 Clique no botão acima para abrir o projeto no GitPod contendo um VS Code pronto pra ser usado direto do navegador.
 
-## Executando o Projeto em um editor ou IDE
+## Executando o Projeto em um editor ou IDE na sua máquina
 
 Após abrir o projeto em um editor de código ou IDE com suporte a Java (como os mencionados), basta executar a classe [ExemploJdbc.java](src/main/java/exemplojdbc/ExemploJdbc.java).
 
