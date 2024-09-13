@@ -37,6 +37,14 @@ public final class SQLUtils {
         }
     }
 
+    private static BufferedReader getFileResource(final String fileName) {
+        final var inputStream = SQLUtils.class.getClassLoader().getResourceAsStream(fileName);
+        if (inputStream == null)
+            throw new UncheckedIOException(new IOException("Não foi possível abrir o arquivo " + fileName));
+
+        return new BufferedReader(new InputStreamReader(inputStream));
+    }
+
     private static String getLine(final BufferedReader reader) throws IOException {
         final  String line = reader.readLine();
         return line == null ? null : line.trim();
@@ -52,13 +60,5 @@ public final class SQLUtils {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static BufferedReader getFileResource(final String fileName) {
-        final var inputStream = ExemploJdbc.class.getClassLoader().getResourceAsStream(fileName);
-        if (inputStream == null)
-            throw new UncheckedIOException(new IOException("Não foi possível abrir o arquivo " + fileName));
-
-        return new BufferedReader(new InputStreamReader(inputStream));
     }
 }
