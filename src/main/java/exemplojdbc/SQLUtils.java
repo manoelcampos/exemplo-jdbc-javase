@@ -38,6 +38,11 @@ public final class SQLUtils {
         }
     }
 
+    /**
+     * Obtém um {@link BufferedReader} para ler um arquivo na pasta resources do projeto.
+     * @param fileName nome do arquivo na pasta resources
+     * @return {@link BufferedReader} para permitir ler o conteúdo do arquivo
+     */
     private static BufferedReader getFileResource(final String fileName) {
         final var inputStream = SQLUtils.class.getClassLoader().getResourceAsStream(fileName);
         if (inputStream == null)
@@ -46,6 +51,12 @@ public final class SQLUtils {
         return new BufferedReader(new InputStreamReader(inputStream));
     }
 
+    /**
+     * Obtém uma linha de um {@link BufferedReader}
+     * @param reader {@link BufferedReader} de onde a linha será lida
+     * @return a linha (depois de um trim) ou null se não foi possível ler
+     * @throws IOException caso ocorra um erro de leitura
+     */
     private static String getLine(final BufferedReader reader) throws IOException {
         final  String line = reader.readLine();
         return line == null ? null : line.trim();
