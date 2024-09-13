@@ -23,6 +23,7 @@ public class ExemploJdbc {
     }
 
     public ExemploJdbc() {
+        //carregarDriverJDBC();
         try(final var conn = getConnection()){
             System.out.printf("Conexão com o banco realizada com sucesso: %s%n%n", CONNECTION_URL);
             SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
@@ -110,7 +111,7 @@ public class ExemploJdbc {
     @Deprecated
     private void carregarDriverJDBC() {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println("Não foi possível carregar a biblioteca para acesso ao banco de dados: " + e.getMessage());
         }
