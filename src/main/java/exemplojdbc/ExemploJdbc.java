@@ -18,6 +18,8 @@ public class ExemploJdbc {
 
     public ExemploJdbc() {
         try(final var conn = getConnection()){
+            System.out.printf("Conexão com o banco realizada com sucesso: %s%n%n", CONNECTION_URL);
+
             SQLUtils.runFile(conn, "schema.sql");
             listarEstados(conn);
             localizarEstado(conn, "PR");
@@ -73,8 +75,6 @@ public class ExemploJdbc {
 
     private void listarEstados(final Connection conn) {
         try{
-            System.out.println("Conexão com o banco realizada com sucesso.");
-
             final var statement = conn.createStatement();
             final var result = statement.executeQuery("select * from estado");
             while(result.next()){
