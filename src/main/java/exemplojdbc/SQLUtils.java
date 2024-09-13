@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * Classe utilitária para execução de scripts SQL.
  * @author Manoel Campos
  */
 public final class SQLUtils {
