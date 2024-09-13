@@ -1,7 +1,5 @@
 # Exemplo de Projeto JavaSE com JDBC
 
-[![](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/manoelcampos/exemplo-jdbc-javase)
-
 Projeto JavaSE do tipo [Maven](https://maven.apache.org) que utiliza JDBC para conectar a um banco de dados [Apache H2](http://h2database.com) em memória, que é criado automaticamente quando a aplicação inicia.
 
 O projeto mostra como usar recursos básicos da JDBC para acesso a um banco de dados relacional qualquer.
@@ -11,6 +9,7 @@ Isto permite executar o projeto em um ambiente online como o https://gitpod.io, 
 O Driver JDBC para o Apache H2 é adicionado como uma dependência no [pom.xml](pom.xml).
 
 ## Executando o projeto no GitPod
+[![](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/manoelcampos/exemplo-jdbc-javase)
 
 > **Warning**
 > - O gitpod.io não funciona se você tiver a extensão do tradutor habilitada no seu navegador.
