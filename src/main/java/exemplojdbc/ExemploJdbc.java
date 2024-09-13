@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Exemplo de conexão a um banco de dados Apache H2 em memória utilizando JDBC.
  * @author Manoel Campos
  */
 public class ExemploJdbc {
