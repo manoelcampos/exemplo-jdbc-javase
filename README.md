@@ -8,7 +8,13 @@ Isto permite executar o projeto em um ambiente online como o https://gitpod.io, 
 
 O Driver JDBC para o Apache H2 é adicionado como uma dependência no [pom.xml](pom.xml).
 
-## Executando o projeto remotamente no GitPod
+## Executando o projeto
+
+Existem duas formas de abrir e executar este projeto: usando um ambiente online como o GitPod ou executando localmente em um editor de código ou IDE na sua máquina.
+
+Independente de qual seja sua escolha, após abrir o projeto, basta executar a classe [ExemploJdbc.java](src/main/java/exemplojdbc/ExemploJdbc.java). Ela vai conectar a um banco H2 em memória (que é recriado cada vez que a aplicação é iniciada), executar o script [schema.sql](src/main/resources/schema.sql) para criar as tabelas e popular o banco, e depois realiza algumas consultas ao banco.
+
+### Executando o projeto remotamente no GitPod
 [![](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/manoelcampos/exemplo-jdbc-javase)
 
 > **Warning**
@@ -17,8 +23,3 @@ O Driver JDBC para o Apache H2 é adicionado como uma dependência no [pom.xml](
 
 Clique no botão acima para abrir o projeto no GitPod contendo um VS Code pronto pra ser usado direto do navegador.
 
-## Executando o Projeto em um editor ou IDE na sua máquina
-
-Após abrir o projeto em um editor de código ou IDE com suporte a Java (como os mencionados), basta executar a classe [ExemploJdbc.java](src/main/java/exemplojdbc/ExemploJdbc.java).
-
-Ela vai conectar a um banco H2 em memória (que é recriado cada vez que a aplicação é iniciada), executar o script [schema.sql](src/main/resources/schema.sql) para criar as tabelas e popular o banco, e depois realiza algumas consultas ao banco.
