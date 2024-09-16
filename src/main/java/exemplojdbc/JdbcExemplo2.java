@@ -51,7 +51,7 @@ public class JdbcExemplo2 extends ExemploBase {
     }
 
     private static void inserirCidades(Connection conn) throws SQLException {
-        final String cidades[] = {"Palmas", "Araguaína", "Cidade Teste"};
+        final String[] cidades = {"Palmas", "Araguaína", "Cidade Teste"};
         final var statement = conn.prepareStatement("insert into cidade (nome, estado_id) values (?, ?)");
         for (String cidade : cidades) {
             statement.setString(1, cidade);
