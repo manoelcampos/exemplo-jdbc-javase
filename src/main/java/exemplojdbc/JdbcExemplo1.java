@@ -1,8 +1,6 @@
 package exemplojdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Um exemplo minimalista de conexão a um banco de dados Apache H2 utilizando JDBC,
@@ -29,8 +27,8 @@ public class JdbcExemplo1 extends ExemploBase {
 
         try(conn){
             SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
-            final var statement = conn.createStatement();
-            final var result = statement.executeQuery("select * from estado");
+            final Statement statement = conn.createStatement();
+            final ResultSet result = statement.executeQuery("select * from estado");
             while(result.next()){
                 System.out.printf(
                         "Id: %2d Nome: %-30s UF: %s\n",
