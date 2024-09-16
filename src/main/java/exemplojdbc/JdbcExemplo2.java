@@ -5,90 +5,75 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Exemplo de conexão a um banco de dados Apache H2 em memória utilizando JDBC.
+ * Um exemplo mostrando como usar {@link java.sql.PreparedStatement}s para passar
+ * parâmetros para um comando SQL e realizar operações de insert e delete.
+ *
+ * <p>Para um código melhor estruturado, veja {@link JdbcExemplo3}.</p>
  * @author Manoel Campos
  */
 public class JdbcExemplo2 extends ExemploBase {
+    private static final long estadoId = 27;
     public static void main(String[] args) {
         new JdbcExemplo2();
     }
 
     public JdbcExemplo2() {
-        //carregarDriverJDBC();
-        try(final var conn = getConnection()){
-            System.out.printf("Conexão com o banco realizada com sucesso: %s%n%n", CONNECTION_URL);
-            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
-
-            localizarEstado(conn, "PR");
-            listarDadosTabela(conn, "produto");
+        final Connection conn;
+        try {
+            conn = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Não foi possível conectar ao banco de dados: " + e.getMessage());
+            return;
         }
-    }
 
-    /**
-     * Lista dinamicamente os dados de todas as linhas e colunas de uma determinada tabela no banco.
-     * @param conn conexão com o banco
-     * @param tabela nome da tabela pra listar os dados
-     */
-    private void listarDadosTabela(final Connection conn, final String tabela) {
-        final var sql = "select * from " + tabela;
-        //System.out.println(sql);
-        try {
-            final var statement = conn.createStatement();
-            final var result = statement.executeQuery(sql);
+        try(conn){
+            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
 
-            final var metadata = result.getMetaData();
-            final int cols = metadata.getColumnCount();
+            inserirCidades(conn);
+            listarCidades(conn);
+            excluirCidade(conn);
+            listarCidades(conn);
 
-            for (int i = 1; i <= cols; i++) {
-                System.out.printf("%-30s | ", metadata.getColumnName(i));
-            }
             System.out.println();
-
-            while(result.next()){
-                for (int i = 1; i <= cols; i++) {
-                    System.out.printf("%-30s | ", result.getString(i));
-                }
-                System.out.println();
-            }
         } catch (SQLException e) {
-            System.err.println("Erro na execução da consulta: " + e.getMessage());
+            System.err.println("Não foi possível executar a consulta ao banco: " + e.getMessage());
         }
     }
 
-    private void localizarEstado(final Connection conn, final String uf) {
+    private static void excluirCidade(final Connection conn) throws SQLException {
+        final int cidadeTesteId = 13;
+
+        final var statement = conn.prepareStatement("delete from cidade where id = ?");
+        statement.setLong(1, cidadeTesteId);
+        statement.execute();
+
+        System.out.printf("Excluída cidade: %d%n%n", cidadeTesteId);
+    }
+
+    private static void inserirCidades(Connection conn) throws SQLException {
+        final String cidades[] = {"Palmas", "Araguaína", "Cidade Teste"};
+        final var statement = conn.prepareStatement("insert into cidade (nome, estado_id) values (?, ?)");
+        for (String cidade : cidades) {
+            statement.setString(1, cidade);
+            statement.setLong(2, estadoId);
+            statement.executeUpdate();
+        }
+    }
+
+    private static void listarCidades(final Connection conn) {
         try{
-            //var sql = "select * from estado where uf = '" + uf + "'"; //suscetível a SQL Injection
-            final var sql = "select * from estado where uf = ?";
-            final var statement = conn.prepareStatement(sql);
-            //System.out.println(sql);
-            statement.setString(1, uf);
+            final var statement = conn.prepareStatement("select * from cidade where estado_id = ?");
+            statement.setLong(1, estadoId);
             final var result = statement.executeQuery();
-            if(result.next()){
-                System.out.printf("Id: %2d Nome: %-30s UF: %s\n", result.getInt("id"), result.getString("nome"), result.getString("uf"));
+            System.out.println("Cidades do Estado " + estadoId);
+            while(result.next()){
+                System.out.printf(
+                        "Id: %2d Cidade: %s\n",
+                        result.getInt("id"), result.getString("nome"));
             }
             System.out.println();
-        } catch(SQLException e){
-            System.err.println("Erro ao executar consulta SQL: " + e.getMessage());
-        }
-
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
-    }
-
-    /**
-     * Carrega o driver JDBC para o banco de dados a ser utilizado.
-     * @deprecated Não é mais necessário nas versões atuais do JDBC.
-     */
-    @Deprecated
-    private void carregarDriverJDBC() {
-        try {
-            Class.forName("org.h2.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println("Não foi possível carregar a biblioteca para acesso ao banco de dados: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Não foi possível executar a consulta ao banco: " + e.getMessage());
         }
     }
 }

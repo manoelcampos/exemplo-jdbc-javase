@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * Assim, esta classe irá intencionalmente ter código duplicado em relação aos outros exemplos
  * disponíveis, para permitir ver, em um único arquivo, todo o processo de execução de uma consulta SQL via JDBC.
  *
- * <p>Para um código melhor estruturado, veja {@link JdbcExemplo2}.</p>
+ * <p>Para um código melhor estruturado, veja {@link JdbcExemplo3}.</p>
  * @author Manoel Campos
  */
 public class JdbcExemplo1 extends ExemploBase {
