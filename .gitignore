@@ -1,3 +1,6 @@
+#Banco de dados H2 temporário (recriado a cada vez que o app é executado)
+*.db
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

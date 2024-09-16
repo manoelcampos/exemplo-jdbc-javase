@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Exemplo de conexão a um banco de dados Apache H2 em memória utilizando JDBC.
+ * Exemplo de conexão a um banco de dados Apache H2 utilizando JDBC.
  * @author Manoel Campos
  */
 public class JdbcExemplo3 extends ExemploBase {
@@ -20,7 +20,7 @@ public class JdbcExemplo3 extends ExemploBase {
             SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
 
             localizarEstado(conn, "PR");
-            listarDadosTabela(conn, "produto");
+            listarDadosTabela(conn, "regiao_geografica");
         } catch (SQLException e) {
             System.err.println("Não foi possível conectar ao banco de dados: " + e.getMessage());
         }

@@ -1,27 +1,11 @@
 -- Script SQL para Apache H2 que cria as tabelas e popula o banco.
-
-create table transacao
-(
-    id      serial         not null primary key,
-    cliente varchar(120)   not null,
-    valor   decimal(10, 2) not null,
-    moeda   varchar(3)     not null,
-    tipo    char           not null
-);
-
-
-create table aluno
-(
-    matricula serial       not null primary key,
-    nome      varchar(120) not null,
-    nota1     decimal(10, 2),
-    nota2     decimal(10, 2),
-    nota3     decimal(10, 2)
-);
+drop table if exists cidade;
+drop table if exists estado;
+drop table if exists regiao_geografica;
 
 CREATE TABLE regiao_geografica
 (
-    id   serial PRIMARY KEY NOT NULL,
+    id   bigint auto_increment PRIMARY KEY NOT NULL,
     nome varchar(75)        NOT NULL
 );
 
@@ -29,7 +13,7 @@ CREATE UNIQUE INDEX ix_regiao ON regiao_geografica (nome);
 
 CREATE TABLE estado
 (
-    id        serial PRIMARY KEY NOT NULL,
+    id        bigint auto_increment PRIMARY KEY NOT NULL,
     nome      varchar(75)        NOT NULL,
     uf        varchar(2)         NOT NULL,
     regiao_id int                NOT NULL,
@@ -43,7 +27,7 @@ CREATE UNIQUE INDEX ix_uf ON estado (uf);
 
 CREATE TABLE cidade
 (
-    id        serial PRIMARY KEY NOT NULL,
+    id        bigint auto_increment PRIMARY KEY NOT NULL,
     nome      varchar(120)       NOT NULL,
     estado_id int                NOT NULL,
     capital   boolean            not null default false,
@@ -51,89 +35,6 @@ CREATE TABLE cidade
 );
 
 CREATE UNIQUE INDEX ix_cidade ON cidade (nome, estado_id);
-
-create table cliente
-(
-    id              serial PRIMARY KEY not null,
-    nome            varchar(75)        not null,
-    cpf             varchar(11)        not null,
-    cidade_id       int                not null,
-    data_nascimento date               not null,
-    constraint fk_cliente_cidade foreign key (cidade_id) references cidade (id)
-);
-
-create unique INDEX ix_cpf_cliente on cliente (cpf);
-
-create table loja
-(
-    id               serial PRIMARY KEY not null,
-    cidade_id        int                not null,
-    data_inauguracao date               not null,
-    constraint fk_loja_cidade foreign key (cidade_id) references cidade (id)
-);
-
-
-create table funcionario
-(
-    id              serial PRIMARY KEY not null,
-    nome            varchar(75)        not null,
-    cpf             varchar(11)        not null,
-    loja_id         int                not null,
-    data_nascimento date               not null,
-    constraint fk_funcionario_loja foreign key (loja_id) references loja (id)
-);
-
-create unique INDEX ix_cpf_funcionario on funcionario (cpf);
-
-create table marca
-(
-    id   serial PRIMARY KEY not null,
-    nome varchar(200)       not null
-);
-
-create unique INDEX ix_marca on marca (nome);
-
-create table produto
-(
-    id       serial PRIMARY KEY not null,
-    nome     varchar(200)       not null,
-    marca_id int                not null,
-    valor    decimal(10, 2)     not null,
-    constraint fk_produto_marca foreign key (marca_id) references marca (id)
-);
-
-create table estoque
-(
-    produto_id int not null,
-    loja_id    int not null,
-    quant      int not null,
-    primary key (produto_id, loja_id),
-    constraint fk_estoque_produto foreign key (produto_id) references produto (id) on delete cascade,
-    constraint fk_estoque_loja foreign key (loja_id) references loja (id)
-);
-
-create table venda
-(
-    id             serial PRIMARY KEY not null,
-    loja_id        int                not null,
-    cliente_id     int                not null,
-    funcionario_id int                not null,
-    data_cadastro  timestamp          not null default current_timestamp,
-    constraint fk_venda_loja foreign key (loja_id) references loja (id),
-    constraint fk_venda_cliente foreign key (cliente_id) references cliente (id),
-    constraint fk_venda_funcionario foreign key (funcionario_id) references funcionario (id)
-);
-
-create table item_venda
-(
-    venda_id   int            not null,
-    produto_id int            not null,
-    quant      int            not null,
-    valor      decimal(10, 2) not null,
-    primary key (venda_id, produto_id),
-    constraint fk_itemvenda_venda foreign key (venda_id) references venda (id) on delete cascade,
-    constraint fk_itemvenda_produto foreign key (produto_id) references produto (id)
-);
 
 -- ########################################################################################################
 
@@ -185,39 +86,3 @@ VALUES ('Afonso Cláudio', 8),
        ('Aracruz', 8),
        ('Atilio Vivacqua', 8);
 
--- ###################################################
-
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Wendy Parker', '96557866635', 1, '1994-04-16');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Stephanie Frami', '19485406486', 2, '1968-10-01');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Stewart Lesch', '88344327169', 2, '1946-05-09');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Mr. Victor Langosh', '16057371750', 3, '2005-11-20');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Dr. Elijah Welch', '42006254770', 3, '1967-05-27');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Suzanne Kreiger', '23828465229', 1, '1993-11-04');
-INSERT INTO cliente (nome, cpf, cidade_id, data_nascimento) VALUES ('Phillip Larkin', '92109749005', 4, '1955-10-19');
-
-INSERT INTO loja (cidade_id, data_inauguracao) VALUES (1, '1943-05-11');
-INSERT INTO loja (cidade_id, data_inauguracao) VALUES (1, '1956-12-03');
-INSERT INTO loja (cidade_id, data_inauguracao) VALUES (2, '1981-05-24');
-INSERT INTO loja (cidade_id, data_inauguracao) VALUES (3, '1984-04-23');
-
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Jessie Jacobs', '49075676852', 1, '1959-02-02');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Santiago Mante', '32914553214', 1, '1982-10-27');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Esther Sauer', '16900316437', 2, '2001-10-11');
-INSERT INTO funcionario (nome, cpf, loja_id, data_nascimento) VALUES ('Dawn Huel', '42142795296', 2, '1989-02-17');
-
-INSERT INTO marca (nome) VALUES ('Little, Boyle and Abshire');
-INSERT INTO marca (nome) VALUES ('Rempel - Herman');
-INSERT INTO marca (nome) VALUES ('Senger - Grimes');
-INSERT INTO marca (nome) VALUES ('Pouros - Gutmann');
-INSERT INTO marca (nome) VALUES ('Ebert Inc');
-
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Recycled Rubber Shirt', 5, 102);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Recycled Frozen Shirt', 1, 798);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Bronze Cheese', 3, 945);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Soft Sausages', 3, 786);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Fantastic Granite Bacon', 4, 23);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Handcrafted Rubber Chips', 1, 910);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Awesome Metal Gloves', 5, 907);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Sleek Granite Shirt', 2, 319);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Electronic Fresh Soap', 5, 971);
-INSERT INTO produto (nome, marca_id, valor) VALUES ('Modern Concrete Cheese', 5, 308);

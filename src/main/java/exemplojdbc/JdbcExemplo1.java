@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Um exemplo minimalista de conexão a um banco de dados Apache H2 em memória utilizando JDBC,
+ * Um exemplo minimalista de conexão a um banco de dados Apache H2 utilizando JDBC,
  * implementando em um único método para dar uma ideia geral de como todo o processo funcionoa.
  * Assim, esta classe irá intencionalmente ter código duplicado em relação aos outros exemplos
  * disponíveis, para permitir ver, em um único arquivo, todo o processo de execução de uma consulta SQL via JDBC.
