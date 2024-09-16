@@ -1,0 +1,44 @@
+package exemplojdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ * Um exemplo minimalista de conexão a um banco de dados Apache H2 em memória utilizando JDBC,
+ * implementando em um único método para dar uma ideia geral de como todo o processo funcionoa.
+ * Assim, esta classe irá intencionalmente ter código duplicado em relação aos outros exemplos
+ * disponíveis, para permitir ver, em um único arquivo, todo o processo de execução de uma consulta SQL via JDBC.
+ *
+ * <p>Para um código melhor estruturado, veja {@link JdbcExemplo2}.</p>
+ * @author Manoel Campos
+ */
+public class JdbcExemplo1 extends ExemploBase {
+    public static void main(String[] args) {
+        new JdbcExemplo1();
+    }
+
+    public JdbcExemplo1() {
+        final Connection conn;
+        try {
+            conn = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            System.err.println("Não foi possível conectar ao banco de dados: " + e.getMessage());
+            return;
+        }
+
+        try(conn){
+            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
+            final var statement = conn.createStatement();
+            final var result = statement.executeQuery("select * from estado");
+            while(result.next()){
+                System.out.printf(
+                        "Id: %2d Nome: %-30s UF: %s\n",
+                        result.getInt("id"), result.getString("nome"), result.getString("uf"));
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.err.println("Não foi possível executar a consulta ao banco: " + e.getMessage());
+        }
+    }
+}
