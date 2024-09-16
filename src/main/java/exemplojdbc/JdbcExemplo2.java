@@ -2,6 +2,7 @@ package exemplojdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -41,13 +42,13 @@ public class JdbcExemplo2 extends ExemploBase {
     }
 
     private static void excluirCidade(final Connection conn) throws SQLException {
-        final int cidadeTesteId = 13;
+        final int cidadeId = 13;
 
-        final var statement = conn.prepareStatement("delete from cidade where id = ?");
-        statement.setLong(1, cidadeTesteId);
-        statement.execute();
+        final PreparedStatement statement = conn.prepareStatement("delete from cidade where id = ?");
+        statement.setLong(1, cidadeId);
+        statement.executeUpdate();
 
-        System.out.printf("Excluída cidade: %d%n%n", cidadeTesteId);
+        System.out.printf("Excluída cidade: %d%n%n", cidadeId);
     }
 
     private static void inserirCidades(Connection conn) throws SQLException {

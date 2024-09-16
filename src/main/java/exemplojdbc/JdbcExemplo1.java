@@ -25,10 +25,14 @@ public class JdbcExemplo1 extends ExemploBase {
             return;
         }
 
+        /*
+        Usa "try with resources" do JDK 9 (originalmente introduzido no JDK 7)
+        para fechar a conexão automaticamente. */
         try(conn){
             SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
             final Statement statement = conn.createStatement();
-            final ResultSet result = statement.executeQuery("select * from estado");
+            String sql = "select * from estado";
+            final ResultSet result = statement.executeQuery(sql);
             while(result.next()){
                 System.out.printf(
                         "Id: %2d Nome: %-30s UF: %s\n",
