@@ -14,7 +14,7 @@ abstract class Base {
      * Por exemplo: jdbc:h2:file:./banco_exemplo
      * onde ./ indica o diretório atual do projeto.
      */
-    protected final String CONNECTION_URL = "jdbc:h2:file:./banco_exemplo";
-    protected final String USERNAME = "sa";
-    protected final String PASSWORD = "password";
+    protected static final String CONNECTION_URL = "jdbc:h2:file:./banco_exemplo";
+    protected static final String USERNAME = "sa";
+    protected static final String PASSWORD = "password";
 }
