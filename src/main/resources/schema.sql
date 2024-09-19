@@ -30,7 +30,6 @@ CREATE TABLE cidade
     id        bigint auto_increment PRIMARY KEY NOT NULL,
     nome      varchar(120)       NOT NULL,
     estado_id int                NOT NULL,
-    capital   boolean            not null default false,
     constraint fk_cidade_estado foreign key (estado_id) references estado (id)
 );
 
