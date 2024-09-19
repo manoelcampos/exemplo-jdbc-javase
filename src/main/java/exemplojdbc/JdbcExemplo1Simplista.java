@@ -8,15 +8,15 @@ import java.sql.*;
  * Assim, esta classe irá intencionalmente ter código duplicado em relação aos outros exemplos
  * disponíveis, para permitir ver, em um único arquivo, todo o processo de execução de uma consulta SQL via JDBC.
  *
- * <p>Para um código melhor estruturado, veja {@link JdbcExemplo3}.</p>
+ * <p>Para um código melhor estruturado, veja {@link JdbcExemplo3LocalizarListarTabelaGenerica}.</p>
  * @author Manoel Campos
  */
-public class JdbcExemplo1 extends ExemploBase {
+public class JdbcExemplo1Simplista extends Base {
     public static void main(String[] args) {
-        new JdbcExemplo1();
+        new JdbcExemplo1Simplista();
     }
 
-    public JdbcExemplo1() {
+    public JdbcExemplo1Simplista() {
         final Connection conn;
         try {
             conn = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);

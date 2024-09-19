@@ -1,9 +1,10 @@
 package exemplojdbc;
 
 /**
+ * Classe base fornecendo configurações para os exemmplos.
  * @author Manoel Campos
  */
-abstract class ExemploBase {
+abstract class Base {
     /**
      * String de conexão com o banco de dados.
      * O banco de dados utilizado é o Apache H2, que está configurado

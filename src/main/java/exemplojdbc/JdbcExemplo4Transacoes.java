@@ -6,54 +6,46 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Um exemplo mostrando como usar {@link java.sql.PreparedStatement}s para passar
- * parâmetros para um comando SQL e realizar operações de insert e delete.
- *
- * <p>Para um código melhor estruturado, veja {@link JdbcExemplo3}.</p>
+ * Um exemplo que mostra como criar e gerenciar transações.
  * @author Manoel Campos
  */
-public class JdbcExemplo2 extends ExemploBase {
-    private static final long estadoId = 27;
-    public static void main(String[] args) {
-        new JdbcExemplo2();
+public class JdbcExemplo4Transacoes extends Base {
+    public static void main(String[] args) throws SQLException {
+        new JdbcExemplo4Transacoes();
     }
 
-    public JdbcExemplo2() {
+    public JdbcExemplo4Transacoes() throws SQLException {
         final Connection conn;
         try {
             conn = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
+            conn.setAutoCommit(false);
         } catch (SQLException e) {
             System.err.println("Não foi possível conectar ao banco de dados: " + e.getMessage());
             return;
         }
 
-        try(conn){
+        final int estadoId = 27; // Tocantins
+        /*
+        Usa "try with resources" do JDK 9 (originalmente introduzido no JDK 7)
+        para fechar a conexão automaticamente. */
+        try{
             SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
-
-            inserirCidades(conn);
-            listarCidades(conn);
-            excluirCidade(conn);
-            listarCidades(conn);
-
-            System.out.println();
+            inserirCidades(conn, estadoId);
+            listarCidades(conn, estadoId);
+            conn.commit();
         } catch (SQLException e) {
+            conn.rollback();
             System.err.println("Não foi possível executar a consulta ao banco: " + e.getMessage());
+            listarCidades(conn, estadoId);
+        } finally {
+            conn.close();
         }
     }
 
-    private static void excluirCidade(final Connection conn) throws SQLException {
-        final int cidadeId = 13;
-
-        final PreparedStatement statement = conn.prepareStatement("delete from cidade where id = ?");
-        statement.setLong(1, cidadeId);
-        statement.executeUpdate();
-
-        System.out.printf("Excluída cidade: %d%n%n", cidadeId);
-    }
-
-    private static void inserirCidades(Connection conn) throws SQLException {
-        final String[] cidades = {"Palmas", "Araguaína", "Cidade Teste"};
-        final var statement = conn.prepareStatement("insert into cidade (nome, estado_id) values (?, ?)");
+    private static void inserirCidades(Connection conn, int estadoId) throws SQLException {
+        final String[] cidades = {"Palmas", null};
+        String sql = "insert into cidade (nome, estado_id) values (?, ?)";
+        final PreparedStatement statement = conn.prepareStatement(sql);
         for (String cidade : cidades) {
             statement.setString(1, cidade);
             statement.setLong(2, estadoId);
@@ -61,7 +53,7 @@ public class JdbcExemplo2 extends ExemploBase {
         }
     }
 
-    private static void listarCidades(final Connection conn) {
+    private static void listarCidades(final Connection conn, final long estadoId) {
         try{
             final var statement = conn.prepareStatement("select * from cidade where estado_id = ?");
             statement.setLong(1, estadoId);

@@ -6,14 +6,16 @@ import java.sql.SQLException;
 
 /**
  * Exemplo de conexão a um banco de dados Apache H2 utilizando JDBC.
+ * Mostra como localizar um registro em uma tabela e como criar um método
+ * para listar dados de qualquer tabela que deseja, informando-se apenas o nome da tabela.
  * @author Manoel Campos
  */
-public class JdbcExemplo3 extends ExemploBase {
+public class JdbcExemplo3LocalizarListarTabelaGenerica extends Base {
     public static void main(String[] args) {
-        new JdbcExemplo3();
+        new JdbcExemplo3LocalizarListarTabelaGenerica();
     }
 
-    public JdbcExemplo3() {
+    public JdbcExemplo3LocalizarListarTabelaGenerica() {
         //carregarDriverJDBC();
         try(final var conn = getConnection()){
             System.out.printf("Conexão com o banco realizada com sucesso: %s%n%n", CONNECTION_URL);
