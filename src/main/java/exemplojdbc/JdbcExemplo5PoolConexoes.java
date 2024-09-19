@@ -38,7 +38,7 @@ import java.util.List;
  * @author Manoel Campos
  */
 public class JdbcExemplo5PoolConexoes extends Base {
-    private static DataSource dataSource = createDataSource();
+    private static final DataSource dataSource = createDataSource();
 
     private static DataSource createDataSource(){
         var config = new HikariConfig();
@@ -74,21 +74,7 @@ public class JdbcExemplo5PoolConexoes extends Base {
         }
     }
 
-    private static void imprimirLista(List<?> lista, String titulo) {
-        System.out.printf("%nLista de %s%n", titulo);
-        for (var objeto : lista) {
-            System.out.println("  " + objeto);
-        }
-        System.out.println();
-    }
-
-    private static void runSqlScript() throws SQLException {
-        try(Connection conn = getConnection()) {
-            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
-        }
-    }
-
-    private static Connection getConnection() {
+    private Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
@@ -96,7 +82,36 @@ public class JdbcExemplo5PoolConexoes extends Base {
         }
     }
 
-    private static int excluirCidades() throws SQLException {
+    private List<Estado> obterEstados() throws SQLException {
+        try(Connection conn = getConnection()) {
+            final var listaEstados = new ArrayList<Estado>();
+            final var statement = conn.createStatement();
+            final String sql = "select * from estado";
+            final var result = statement.executeQuery(sql);
+            while(result.next()){
+                var estado = new Estado(result.getLong("id"), result.getString("nome"), result.getString("uf"));
+                listaEstados.add(estado);
+            }
+
+            return listaEstados;
+        }
+    }
+
+    private void imprimirLista(List<?> lista, String titulo) {
+        System.out.printf("%nLista de %s%n", titulo);
+        for (var objeto : lista) {
+            System.out.println("  " + objeto);
+        }
+        System.out.println();
+    }
+
+    private void runSqlScript() throws SQLException {
+        try(Connection conn = getConnection()) {
+            SQLUtils.runFile(conn, "schema.sql"); // Cria as tabelas e popula o banco
+        }
+    }
+
+    private int excluirCidades() throws SQLException {
         System.out.println("Excluindo todas as cidades cadastradas");
         try(Connection conn = getConnection()) {
             String sql = "delete from cidade";
@@ -105,11 +120,12 @@ public class JdbcExemplo5PoolConexoes extends Base {
         }
     }
 
-    private static void inserirCidades(long estadoId) throws SQLException {
+    private void inserirCidades(long estadoId) throws SQLException {
         final String[] cidades = {"Palmas", "Araguaína", "Cidade Teste"};
 
         try(Connection conn = getConnection()) {
-            final var statement = conn.prepareStatement("insert into cidade (nome, estado_id) values (?, ?)");
+            String sql = "insert into cidade (nome, estado_id) values (?, ?)";
+            final var statement = conn.prepareStatement(sql);
             for (String cidade : cidades) {
                 statement.setString(1, cidade);
                 statement.setLong(2, estadoId);
@@ -118,21 +134,7 @@ public class JdbcExemplo5PoolConexoes extends Base {
         }
     }
 
-    private static List<Estado> obterEstados() throws SQLException {
-        try(Connection conn = getConnection()) {
-            final var listaEstados = new ArrayList<Estado>();
-            final var statement = conn.createStatement();
-            final String sql = "select * from estado";
-            final var result = statement.executeQuery(sql);
-            while(result.next()){
-                listaEstados.add(new Estado(result.getLong("id"), result.getString("nome"), result.getString("uf")));
-            }
-
-            return listaEstados;
-        }
-    }
-
-    private static Estado localizarEstado(long estadoId) throws SQLException {
+    private Estado localizarEstado(long estadoId) throws SQLException {
         try(Connection conn = getConnection()) {
             final String sql = "select * from estado where id = ?";
             final var statement = conn.prepareStatement(sql);
@@ -146,8 +148,7 @@ public class JdbcExemplo5PoolConexoes extends Base {
         }
     }
 
-
-    private static List<Cidade> obterCidades(long estadoId) throws SQLException {
+    private List<Cidade> obterCidades(long estadoId) throws SQLException {
         try(Connection conn = getConnection()) {
             final var listaCidades = new ArrayList<Cidade>();
             final String sql = "select * from cidade where estado_id = ?";
