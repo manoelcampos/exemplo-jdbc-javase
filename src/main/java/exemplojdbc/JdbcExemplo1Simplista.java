@@ -36,7 +36,7 @@ public class JdbcExemplo1Simplista extends Base {
             while(result.next()){
                 System.out.printf(
                         "Id: %2d Nome: %-30s UF: %s\n",
-                        result.getInt("id"), result.getString("nome"), result.getString("uf"));
+                        result.getLong("id"), result.getString("nome"), result.getString("uf"));
             }
             System.out.println();
         } catch (SQLException e) {

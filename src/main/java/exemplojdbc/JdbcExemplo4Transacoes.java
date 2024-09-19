@@ -24,7 +24,7 @@ public class JdbcExemplo4Transacoes extends Base {
             return;
         }
 
-        final int estadoId = 27; // Tocantins
+        final long estadoId = 27; // Tocantins
         /*
         Usa "try with resources" do JDK 9 (originalmente introduzido no JDK 7)
         para fechar a conexão automaticamente. */
@@ -42,7 +42,7 @@ public class JdbcExemplo4Transacoes extends Base {
         }
     }
 
-    private static void inserirCidades(Connection conn, int estadoId) throws SQLException {
+    private static void inserirCidades(Connection conn, long estadoId) throws SQLException {
         final String[] cidades = {"Palmas", null};
         String sql = "insert into cidade (nome, estado_id) values (?, ?)";
         final PreparedStatement statement = conn.prepareStatement(sql);

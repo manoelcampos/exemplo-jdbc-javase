@@ -42,7 +42,7 @@ public class JdbcExemplo2ListarInserirExcluir extends Base {
     }
 
     private static void excluirCidade(final Connection conn) throws SQLException {
-        final int cidadeId = 13;
+        final long cidadeId = 13;
 
         final PreparedStatement statement = conn.prepareStatement("delete from cidade where id = ?");
         statement.setLong(1, cidadeId);
@@ -70,7 +70,7 @@ public class JdbcExemplo2ListarInserirExcluir extends Base {
             while(result.next()){
                 System.out.printf(
                         "Id: %2d Cidade: %s\n",
-                        result.getInt("id"), result.getString("nome"));
+                        result.getLong("id"), result.getString("nome"));
             }
             System.out.println();
         } catch (SQLException e) {
